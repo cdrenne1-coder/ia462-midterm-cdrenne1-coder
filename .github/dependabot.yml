@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/midterm"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Docker base image
+  - package-ecosystem: "docker"
+    directory: "/midterm/section3"
+    schedule:
+      interval: "weekly"
+
+  # GitHub Actions themselves (pinned SHAs)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

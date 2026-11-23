@@ -1,0 +1,33 @@
+title: Suspicious Base64-Encoded PowerShell
+id: 5b3a5c7c-1a2b-4c3d-9e8f-lab3-ia462
+status: experimental
+description: |
+  Detects the use of PowerShell with -EncodedCommand, a common living-off-the-land
+  technique used to obfuscate malicious payloads. Maps to MITRE ATT&CK T1059.001
+  (PowerShell) and T1027 (Obfuscated Files or Information).
+author: IA 462 Student
+date: 2026/11/22
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+  - https://attack.mitre.org/techniques/T1027/
+logsource:
+  product: windows
+  service: security
+  category: process_creation
+detection:
+  selection:
+    EventID: 4688
+    NewProcessName|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - '-EncodedCommand'
+      - '-enc '
+      - '-e '
+  condition: selection
+falsepositives:
+  - Legitimate administrator scripts that use -EncodedCommand for line-continuation reasons
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.001
+  - attack.defense_evasion
+  - attack.t1027
